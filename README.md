@@ -1,176 +1,277 @@
-📘 System Design & Architecture
-Online Movie Ticket Booking System (MongoDB – Single Theatre)
-🧱 Entities and Attributes
-1️⃣ User
+🎬 Online Movie Ticket Booking System
+Single Theatre • MongoDB • Full Stack Project
 
-Stores registered user details.
+A real-world movie ticket booking application designed with a clean MongoDB schema, secure backend, and user-friendly frontend.
 
-_id – ObjectId (Primary Key)
+🌟 Project Highlights
 
-name – String
+✅ Real-time seat booking
+✅ No double-booking of seats
+✅ Clean MongoDB data modeling
+✅ RESTful API design
+✅ Secure authentication
+✅ Scalable architecture
 
-email – String (Unique)
+📌 About the Project
 
-phone – String
+The Online Movie Ticket Booking System is a full-stack web application built for a single theatre environment.
+It allows users to browse movies, view show timings, select seats, book tickets, and make payments seamlessly.
 
-password – String (Hashed)
+This project focuses on:
 
-createdAt – Date
+Database design using MongoDB
 
-2️⃣ Movie
+Efficient seat-booking logic
 
-Stores movie information.
+Clear separation of frontend & backend
 
-_id – ObjectId (Primary Key)
+Real-world application architecture
 
-title – String
+🎯 Objectives
 
-language – String
+Design a scalable NoSQL database schema
 
-genre – Array of String
+Prevent seat duplication using atomic updates
 
-duration – Number (in minutes)
+Demonstrate MongoDB concepts like embedding & referencing
 
-releaseDate – Date
+Build a production-ready backend
 
-3️⃣ Screen
+Create a clean and intuitive frontend
 
-Represents screens in the theatre.
+🛠️ Tech Stack
+🔹 Backend
 
-_id – ObjectId (Primary Key)
+Node.js
 
-screenName – String
+Express.js
 
-totalSeats – Number
+MongoDB
 
-4️⃣ Seat
+Mongoose
 
-Represents seat layout for each screen.
+JWT Authentication
 
-_id – ObjectId (Primary Key)
+bcrypt (Password Hashing)
 
-screenId – ObjectId (Reference: Screen)
+🔹 Frontend
 
-seatNumber – String
+React.js
 
-seatType – Normal / Premium
+HTML
 
-5️⃣ Show
+CSS
 
-Represents movie show timings.
+JavaScript
 
-_id – ObjectId (Primary Key)
+🔹 Tools
 
-movieId – ObjectId (Reference: Movie)
+MongoDB Atlas / Compass
 
-screenId – ObjectId (Reference: Screen)
+Postman
 
-showDate – String
+Git & GitHub
 
-showTime – String
+🧱 System Architecture
+┌───────────────┐      API Calls       ┌────────────────┐
+│               │  ───────────────▶   │                │
+│   Frontend    │                      │    Backend     │
+│  (React.js)   │  ◀───────────────   │ (Node + Express)│
+│               │                      │                │
+└───────────────┘                      └────────────────┘
+                                              │
+                                              │
+                                              ▼
+                                     ┌────────────────┐
+                                     │                │
+                                     │    MongoDB     │
+                                     │   (NoSQL DB)   │
+                                     │                │
+                                     └────────────────┘
 
-pricePerSeat – Number
+🗄️ Database Design (MongoDB)
+📁 Collections Used
 
-bookedSeats – Array of String
+User
 
-6️⃣ Booking
+Movie
 
-Stores booking details.
+Screen
 
-_id – ObjectId (Primary Key)
+Seat
 
-userId – ObjectId (Reference: User)
+Show
 
-showId – ObjectId (Reference: Show)
+Booking
 
-bookingDate – Date
+Payment
 
-totalAmount – Number
+🎟️ Ticket is embedded inside the Booking document.
 
-status – CONFIRMED / CANCELLED
+🧩 Entities & Attributes
+👤 User
 
-tickets – Array of embedded Ticket objects
+userId
 
-7️⃣ Ticket (Embedded Document)
+name
 
-Represents issued tickets.
+email
 
-seatNumber – String
+phone
 
-ticketNumber – String
+password (hashed)
 
-Tickets are embedded inside the Booking document.
+createdAt
 
-8️⃣ Payment
+🎬 Movie
 
-Stores payment transaction details.
+movieId
 
-_id – ObjectId (Primary Key)
+title
 
-bookingId – ObjectId (Reference: Booking)
+language
 
-paymentMethod – UPI / Card / Cash
+genre
 
-paymentStatus – SUCCESS / FAILED
+duration
 
-amount – Number
+releaseDate
 
-paidAt – Date
+🖥️ Screen
+
+screenId
+
+screenName
+
+totalSeats
+
+💺 Seat
+
+seatId
+
+screenId
+
+seatNumber
+
+seatType
+
+⏰ Show
+
+showId
+
+movieId
+
+screenId
+
+showDate
+
+showTime
+
+pricePerSeat
+
+bookedSeats
+
+📖 Booking
+
+bookingId
+
+userId
+
+showId
+
+bookingDate
+
+totalAmount
+
+status
+
+tickets (embedded)
+
+🎟️ Ticket (Embedded)
+
+seatNumber
+
+ticketNumber
+
+💳 Payment
+
+paymentId
+
+bookingId
+
+paymentMethod
+
+paymentStatus
+
+amount
+
+paidAt
 
 🔗 Entity Relationships
-From Entity	Relationship	To Entity	Type
-User	makes	Booking	One-to-Many
-Movie	has	Show	One-to-Many
-Screen	contains	Seat	One-to-Many
-Screen	hosts	Show	One-to-Many
-Show	has	Booking	One-to-Many
-Booking	generates	Ticket	One-to-Many (Embedded)
-Booking	has	Payment	One-to-One
-🏗️ System Architecture Diagram
-+----------------+       API Requests       +-------------------+
-|                |  <------------------->  |                   |
-|   Frontend     |                          |     Backend       |
-|  (React.js)    |                          | (Node + Express)  |
-|                |                          |                   |
-+----------------+                          +-------------------+
-                                                     |
-                                                     |
-                                                     v
-                                           +-------------------+
-                                           |                   |
-                                           |     MongoDB       |
-                                           |   (NoSQL DB)      |
-                                           |                   |
-                                           +-------------------+
-
-🗄️ Database Schema Diagram (Logical View)
-User
- |
- | 1
- |_________
-           |
-           | M
-        Booking -------- Payment
-           |
-           |
-           | M
+User ──▶ Booking ──▶ Payment
+           │
+           ▼
         Ticket (Embedded)
-           |
-           |
-         Show -------- Movie
-           |
-           |
-         Screen
-           |
-           |
-          Seat
+           │
+           ▼
+          Show ──▶ Movie
+           │
+           ▼
+         Screen ──▶ Seat
 
-🧠 Data Modeling Strategy
 
-Referencing is used for major entities like User, Show, and Booking
+One User → Many Bookings
 
-Embedding is used for Ticket inside Booking
+One Movie → Many Shows
 
-Seat availability is tracked using bookedSeats inside Show
+One Screen → Many Seats
 
-MongoDB transactions ensure booking and payment consistency
+One Show → Many Bookings
+
+One Booking → Many Tickets
+
+One Booking → One Payment
+
+🔄 Booking Workflow
+
+1️⃣ User selects a movie & show
+2️⃣ Available seats are displayed
+3️⃣ User selects seats
+4️⃣ Booking is created
+5️⃣ Seats are locked using bookedSeats
+6️⃣ Tickets are generated
+7️⃣ Payment is recorded
+
+✔ MongoDB transactions ensure data consistency
+
+🔐 Security Features
+
+Password hashing using bcrypt
+
+JWT-based authentication
+
+Secure environment variables
+
+Atomic seat booking logic
+
+🚀 Future Enhancements
+
+Online payment gateway integration
+
+Seat category-based pricing
+
+Booking cancellation & refund system
+
+Admin dashboard
+
+QR code-based ticket validation
+
+👨‍💻 Team Members
+
+Bhaskara – Backend Development & Database Design
+
+Sanjeev R B – Frontend Development
+
+Khushal L – Frontend Development
+
+Ramachandra – Team Member
