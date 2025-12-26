@@ -1,0 +1,43 @@
+/* Additional custom styles */
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.show-button:hover {
+  background-color: #eff6ff;
+  border-color: #2563eb;
+}
+
+.seat-button {
+  transition: all 0.2s ease;
+}
+
+.seat-button:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.seat-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
