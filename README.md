@@ -270,7 +270,7 @@ QR code-based ticket validation
 
 Bhaskara – Backend Development & Database Design
 
-Sanjeev R B – Frontend Development
+Sanjeev R B – Team member
 
 Khushal L – Frontend Development
 
